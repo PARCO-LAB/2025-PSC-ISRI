@@ -1,0 +1,9 @@
+#!/bin/bash
+cd Scrivania
+mkdir es1
+cd es1
+touch file1.txt
+mv file1.txt file2.txt
+rm file2.txt
+cd ..
+rmdir es1
