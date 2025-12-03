@@ -28,7 +28,7 @@ int main() {
     transposeMatrix(matrice);
 
     printf("---\n");
-    for (r = 0; r < DIM; r++) {
+    for (r = 0; r < DIM; r++) { 
         for (c = 0; c < DIM; c++) {
             printf("%i ", matrice[r][c]);
         }
