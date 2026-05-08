@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+  int data;
+  struct Node *left;
+  struct Node *right;
+};
+
+struct Node *new_node(int value) {
+  struct Node *n = (struct Node *)malloc(sizeof(struct Node));
+  if (n == NULL) {
+    exit(1);
+  }
+  n->data = value;
+  n->left = NULL;
+  n->right = NULL;
+  return n;
+}
+
+int min_value(struct Node *root) {
+  if (root->left == NULL && root->right == NULL) {
+    return root->data;
+  }
+  if (root->left == NULL) {
+    int right_min = min_value(root->right);
+    return (root->data < right_min) ? root->data : right_min;
+  }
+  if (root->right == NULL) {
+    int left_min = min_value(root->left);
+    return (root->data < left_min) ? root->data : left_min;
+  }
+
+  int left_min = min_value(root->left);
+  int right_min = min_value(root->right);
+  int child_min = (left_min < right_min) ? left_min : right_min;
+  return (root->data < child_min) ? root->data : child_min;
+}
+
+void free_tree(struct Node *root) {
+  if (root != NULL) {
+    free_tree(root->left);
+    free_tree(root->right);
+    free(root);
+  }
+}
+
+int main() {
+  struct Node *root = new_node(9);
+  root->left = new_node(5);
+  root->right = new_node(15);
+  root->left->left = new_node(0);
+  root->left->right = new_node(7);
+  root->right->left = new_node(12);
+  root->right->right = new_node(18);
+
+  printf("minimo: %d\n", min_value(root));
+  free_tree(root);
+  return 0;
+}
